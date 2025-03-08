@@ -38,7 +38,7 @@ Tasks should be tracked in some issue tracking system. I will use this section f
 - Use standardized API problem details (https://tools.ietf.org/html/rfc7807)
 - Fluent assertions for better readability
 - Add clock abstraction to test some time-based calculations
-- Refactor employee and services to separated use-cases
+- Refactor employee and dependent services to separated use-cases
 - Support multiple currencies
 - Introduce repository pattern to separate data access
 - Switch to production-ready database provider

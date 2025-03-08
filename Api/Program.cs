@@ -1,4 +1,5 @@
 using Api.Application;
+using Api.Middleware;
 using Api.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -51,7 +52,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<Api.Middleware.ExceptionHandlingMiddleware>();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseCors(allowLocalhost);
 app.UseHttpsRedirection();
 app.UseAuthorization();
