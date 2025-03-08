@@ -21,7 +21,7 @@ Tasks should be tracked in some issue tracking system. I will use this section f
 - [X] Use http for development
 - [X] Add persistence
 - [X] Implement dependent and employee services
-- [ ] Implement dependents controller methods
+- [X] Implement dependents controller methods
 - [ ] Implement the paycheck calculation method
 - [ ] Implement employees controller methods
 - [ ] Check the codebase test coverage and add missing tests
