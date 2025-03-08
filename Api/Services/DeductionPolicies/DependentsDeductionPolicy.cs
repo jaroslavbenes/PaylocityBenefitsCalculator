@@ -10,5 +10,9 @@ public class DependentsDeductionPolicy : IDeductionPolicy
     public string Name => "Dependents Benefits Costs";
 
     public bool IsApplicable(Employee employee) => employee.Dependents.Count > 0;
-    public decimal Calculate(Employee employee, int paychecksPerYear) => employee.Dependents.Count * DependentMonthlyCost * 12 / paychecksPerYear;
+
+    public decimal Calculate(Employee employee, int paychecksPerYear) =>
+        IsApplicable(employee)
+            ? employee.Dependents.Count * DependentMonthlyCost * 12 / paychecksPerYear
+            : 0;
 }

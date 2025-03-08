@@ -10,5 +10,9 @@ public class BaseDeductionPolicy : IDeductionPolicy
     public string Name => "Base Benefits Costs";
 
     public bool IsApplicable(Employee employee) => true;
-    public decimal Calculate(Employee employee, int paychecksPerYear) => BaseMonthlyCost * 12 / paychecksPerYear;
+
+    public decimal Calculate(Employee employee, int paychecksPerYear) =>
+        IsApplicable(employee)
+            ? BaseMonthlyCost * 12 / paychecksPerYear
+            : 0;
 }

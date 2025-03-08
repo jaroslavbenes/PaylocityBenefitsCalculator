@@ -11,5 +11,9 @@ public class HighEarnerDeductionPolicy : IDeductionPolicy
     public string Name => "High Earner 2% Surcharge";
 
     public bool IsApplicable(Employee employee) => employee.Salary > SalaryThreshold;
-    public decimal Calculate(Employee employee, int paychecksPerYear) => employee.Salary * SurchargeRate / paychecksPerYear;
+
+    public decimal Calculate(Employee employee, int paychecksPerYear) =>
+        IsApplicable(employee)
+            ? employee.Salary * SurchargeRate / paychecksPerYear
+            : 0;
 }

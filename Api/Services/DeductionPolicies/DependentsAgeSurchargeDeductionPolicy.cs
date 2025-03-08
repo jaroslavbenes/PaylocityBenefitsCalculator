@@ -13,5 +13,7 @@ public class DependentsAgeSurchargeDeductionPolicy : IDeductionPolicy
     public bool IsApplicable(Employee employee) => employee.Dependents.Any(d => d.DateOfBirth.AddYears(AgeThreshold) <= DateTime.Today);
 
     public decimal Calculate(Employee employee, int paychecksPerYear) =>
-        employee.Dependents.Count(d => d.DateOfBirth.AddYears(AgeThreshold) <= DateTime.Today) * MonthlySurchargePerDependent * 12 / paychecksPerYear;
+        IsApplicable(employee)
+            ? employee.Dependents.Count(d => d.DateOfBirth.AddYears(AgeThreshold) <= DateTime.Today) * MonthlySurchargePerDependent * 12 / paychecksPerYear
+            : 0;
 }
