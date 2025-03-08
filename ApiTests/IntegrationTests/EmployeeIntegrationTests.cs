@@ -9,12 +9,13 @@ using Xunit;
 
 namespace ApiTests.IntegrationTests;
 
-public class EmployeeIntegrationTests : IntegrationTest
+public class EmployeeIntegrationTests(TestWebApplicationFactory factory) : IClassFixture<TestWebApplicationFactory>
 {
     [Fact]
     public async Task WhenAskedForAllEmployees_ShouldReturnAllEmployees()
     {
-        var response = await HttpClient.GetAsync("/api/v1/employees");
+        // Arrange
+        var client = factory.CreateClient();
         var employees = new List<GetEmployeeDto>
         {
             new()
@@ -80,14 +81,19 @@ public class EmployeeIntegrationTests : IntegrationTest
                 }
             }
         };
+
+        // Act
+        var response = await client.GetAsync("/api/v1/employees");
+
+        // Assert
         await response.ShouldReturn(HttpStatusCode.OK, employees);
     }
 
     [Fact]
-    //task: make test pass
     public async Task WhenAskedForAnEmployee_ShouldReturnCorrectEmployee()
     {
-        var response = await HttpClient.GetAsync("/api/v1/employees/1");
+        // Arrange
+        var client = factory.CreateClient();
         var employee = new GetEmployeeDto
         {
             Id = 1,
@@ -96,15 +102,24 @@ public class EmployeeIntegrationTests : IntegrationTest
             Salary = 75420.99m,
             DateOfBirth = new DateTime(1984, 12, 30)
         };
+
+        // Act
+        var response = await client.GetAsync("/api/v1/employees/1");
+
+        // Assert
         await response.ShouldReturn(HttpStatusCode.OK, employee);
     }
-    
+
     [Fact]
-    //task: make test pass
     public async Task WhenAskedForANonexistentEmployee_ShouldReturn404()
     {
-        var response = await HttpClient.GetAsync($"/api/v1/employees/{int.MinValue}");
+        // Arrange
+        var client = factory.CreateClient();
+
+        // Act
+        var response = await client.GetAsync($"/api/v1/employees/{int.MinValue}");
+
+        // Assert
         await response.ShouldReturn(HttpStatusCode.NotFound);
     }
 }
-

@@ -58,3 +58,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+namespace Api
+{
+    public abstract class Program;
+}

@@ -8,13 +8,13 @@ using Xunit;
 
 namespace ApiTests.IntegrationTests;
 
-public class DependentIntegrationTests : IntegrationTest
+public class DependentIntegrationTests(TestWebApplicationFactory factory) : IClassFixture<TestWebApplicationFactory>
 {
     [Fact]
-    //task: make test pass
     public async Task WhenAskedForAllDependents_ShouldReturnAllDependents()
     {
-        var response = await HttpClient.GetAsync("/api/v1/dependents");
+        // Arrange
+        var client = factory.CreateClient();
         var dependents = new List<GetDependentDto>
         {
             new()
@@ -50,14 +50,19 @@ public class DependentIntegrationTests : IntegrationTest
                 DateOfBirth = new DateTime(1974, 1, 2)
             }
         };
+
+        // Act
+        var response = await client.GetAsync("/api/v1/dependents");
+
+        // Assert
         await response.ShouldReturn(HttpStatusCode.OK, dependents);
     }
 
     [Fact]
-    //task: make test pass
     public async Task WhenAskedForADependent_ShouldReturnCorrectDependent()
     {
-        var response = await HttpClient.GetAsync("/api/v1/dependents/1");
+        // Arrange
+        var client = factory.CreateClient();
         var dependent = new GetDependentDto
         {
             Id = 1,
@@ -66,15 +71,24 @@ public class DependentIntegrationTests : IntegrationTest
             Relationship = Relationship.Spouse,
             DateOfBirth = new DateTime(1998, 3, 3)
         };
+
+        // Act
+        var response = await client.GetAsync("/api/v1/dependents/1");
+
+        // Assert
         await response.ShouldReturn(HttpStatusCode.OK, dependent);
     }
 
     [Fact]
-    //task: make test pass
     public async Task WhenAskedForANonexistentDependent_ShouldReturn404()
     {
-        var response = await HttpClient.GetAsync($"/api/v1/dependents/{int.MinValue}");
+        // Arrange
+        var client = factory.CreateClient();
+
+        // Act
+        var response = await client.GetAsync($"/api/v1/dependents/{int.MinValue}");
+
+        // Assert
         await response.ShouldReturn(HttpStatusCode.NotFound);
     }
 }
-

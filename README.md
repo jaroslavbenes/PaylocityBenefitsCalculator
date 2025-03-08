@@ -26,5 +26,6 @@ Tasks should be tracked in some issue tracking system. I will use this section f
 - [X] Implement employees controller methods
 - [X] Check the codebase test coverage and add missing tests
 - [X] Check all requirements are met and covered by passing test cases
-- [ ] Review the codebase
+- [X] Review the codebase
+- [X] Refactor integration tests to use WebApplicationFactory
 - [ ] List possible enhancements based on how the project evolves
