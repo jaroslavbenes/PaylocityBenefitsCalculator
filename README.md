@@ -31,4 +31,14 @@ Tasks should be tracked in some issue tracking system. I will use this section f
 - [X] Restructure the project for future enhancements
 - [X] Make DTOs immutable
 - [X] Add an integration test for the employees controller GetPayStub method
-- [ ] List possible enhancements based on how the project evolves
+- [X] List possible enhancements based on how the project evolves
+
+## Possible enhancements based on how the project evolves
+- Update naming conventions to better align with the business
+- Use standardized API problem details (https://tools.ietf.org/html/rfc7807)
+- Fluent assertions for better readability
+- Add clock abstraction to test some time-based calculations
+- Refactor employee and services to separated use-cases
+- Support multiple currencies
+- Introduce repository pattern to separate data access
+- Switch to production-ready database provider
