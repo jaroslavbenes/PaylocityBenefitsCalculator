@@ -23,7 +23,7 @@ Tasks should be tracked in some issue tracking system. I will use this section f
 - [X] Implement dependent and employee services
 - [X] Implement dependents controller methods
 - [X] Implement the paycheck calculation method
-- [ ] Implement employees controller methods
+- [X] Implement employees controller methods
 - [ ] Check the codebase test coverage and add missing tests
 - [ ] Check all requirements are met and covered by passing test cases
 - [ ] Provide instructions on how to run the application
