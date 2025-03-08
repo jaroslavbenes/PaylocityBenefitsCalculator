@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Api.Application.Models;
 using Api.Dtos.Dependent;
 using Api.Dtos.Employee;
+using Api.Dtos.PayStub;
 using Xunit;
 
 namespace ApiTests.IntegrationTests;
@@ -83,5 +84,31 @@ public class EmployeeIntegrationTests(TestWebApplicationFactory factory) : IClas
 
         // Assert
         await response.ShouldReturn(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public async Task WhenAskedForEmployeePayStub_ShouldReturnCorrectPayStub()
+    {
+        // Arrange
+        var client = factory.CreateClient();
+        var expectedPayStub =
+            new PayStubDto(
+                3,
+                5508.12m,
+                new List<DeductionDto>
+                {
+                    new("Base Benefits Costs", 461.54m),
+                    new("Dependents Benefits Costs", 276.92m),
+                    new("High Earner 2% Surcharge", 110.16m),
+                    new("Dependents age surcharge", 92.31m)
+                },
+                940.93m,
+                4567.19m);
+
+        // Act
+        var response = await client.GetAsync("/api/v1/employees/3/paystub");
+
+        // Assert
+        await response.ShouldReturn(HttpStatusCode.OK, expectedPayStub);
     }
 }

@@ -30,5 +30,5 @@ Tasks should be tracked in some issue tracking system. I will use this section f
 - [X] Refactor integration tests to use WebApplicationFactory
 - [X] Restructure the project for future enhancements
 - [X] Make DTOs immutable
+- [X] Add an integration test for the employees controller GetPayStub method
 - [ ] List possible enhancements based on how the project evolves
-
