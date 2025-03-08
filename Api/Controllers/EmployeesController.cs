@@ -12,13 +12,15 @@ namespace Api.Controllers;
 [Route("api/v1/[controller]")]
 public class EmployeesController(IEmployeeService service) : ControllerBase
 {
+    private readonly IEmployeeService _service = service ?? throw new ArgumentNullException(nameof(service));
+
     [SwaggerOperation(Summary = "Get employee by id")]
     [ProducesResponseType(200, Type = typeof(ApiResponse<EmployeeDto>))]
     [ProducesResponseType(404, Type = typeof(ApiResponse<EmployeeDto>))]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ApiResponse<EmployeeDto>>> Get(int id, CancellationToken ct)
     {
-        var employee = await service.GetEmployee(id, ct);
+        var employee = await _service.GetEmployee(id, ct);
 
         return employee is null
             ? NotFound(new ApiResponse<EmployeeDto>(Data: null, Success: false, Message: "Employee not found"))
@@ -31,7 +33,7 @@ public class EmployeesController(IEmployeeService service) : ControllerBase
     [HttpGet("{id:int}/PayStub")]
     public async Task<ActionResult<ApiResponse<PayStubDto>>> GetPayStub(int id, CancellationToken ct)
     {
-        var payStub = await service.GetPayStub(id, ct);
+        var payStub = await _service.GetPayStub(id, ct);
 
         return payStub is null
             ? NotFound(new ApiResponse<PayStubDto>(Data: null, Success: false, Message: "Employee not found"))
@@ -43,7 +45,7 @@ public class EmployeesController(IEmployeeService service) : ControllerBase
     [HttpGet("")]
     public async Task<ActionResult<ApiResponse<List<EmployeeDto>>>> GetAll(CancellationToken ct)
     {
-        var employees = await service.GetAllEmployees(ct);
+        var employees = await _service.GetAllEmployees(ct);
         var data = employees.Select(e => e.ToEmployeeDto()).ToList();
         return Ok(new ApiResponse<List<EmployeeDto>>(Data: data, Success: true));
     }

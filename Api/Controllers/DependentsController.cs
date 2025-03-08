@@ -11,13 +11,15 @@ namespace Api.Controllers;
 [Route("api/v1/[controller]")]
 public class DependentsController(IDependentService service) : ControllerBase
 {
+    private readonly IDependentService _service = service ?? throw new ArgumentNullException(nameof(service));
+
     [SwaggerOperation(Summary = "Get dependent by id")]
     [ProducesResponseType(200, Type = typeof(ApiResponse<DependentDto>))]
     [ProducesResponseType(404, Type = typeof(ApiResponse<DependentDto>))]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ApiResponse<DependentDto>>> Get(int id, CancellationToken ct)
     {
-        var dependent = await service.GetDependent(id, ct);
+        var dependent = await _service.GetDependent(id, ct);
         return dependent is null
             ? NotFound(new ApiResponse<DependentDto>(Data: null, Success: false, Message: "Dependent not found"))
             : Ok(new ApiResponse<DependentDto>(Data: dependent.ToDependentDto(), Success: true));
@@ -28,7 +30,7 @@ public class DependentsController(IDependentService service) : ControllerBase
     [HttpGet("")]
     public async Task<ActionResult<ApiResponse<List<DependentDto>>>> GetAll(CancellationToken ct)
     {
-        var dependents = await service.GetAllDependents(ct);
+        var dependents = await _service.GetAllDependents(ct);
         var data = dependents.Select(d => d.ToDependentDto()).ToList();
         return Ok(new ApiResponse<List<DependentDto>>(Data: data, Success: true));
     }
