@@ -1,4 +1,5 @@
 using Api.Persistence;
+using Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -28,6 +29,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddPersistence();
+builder.Services.AddServices();
 
 var app = builder.Build();
 

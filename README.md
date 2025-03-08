@@ -20,7 +20,7 @@ Tasks should be tracked in some issue tracking system. I will use this section f
 - [X] Update TargetFramework to latest supported LTS
 - [X] Use http for development
 - [X] Add persistence
-- [ ] Implement dependent and employee services
+- [X] Implement dependent and employee services
 - [ ] Implement dependents controller methods
 - [ ] Implement the paycheck calculation method
 - [ ] Implement employees controller methods
