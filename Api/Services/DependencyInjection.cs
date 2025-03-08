@@ -9,6 +9,7 @@ public static class DependencyInjection
         services
             .AddScoped<IDependentService, DependentService>()
             .AddScoped<IEmployeeService, EmployeeService>()
+            .AddScoped<IPayStubService, PayStubService>()
             .AddDeductionPolicies();
 
     private static IServiceCollection AddDeductionPolicies(this IServiceCollection services) =>
