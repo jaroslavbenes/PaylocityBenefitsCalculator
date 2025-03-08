@@ -18,7 +18,7 @@ based on the following requirements:
 Tasks should be tracked in some issue tracking system. I will use this section for simplicity.
 - [X] Check the provided code base and create tasks
 - [X] Update TargetFramework to latest supported LTS
-- [ ] Use http for development
+- [X] Use http for development
 - [ ] Add persistence
 - [ ] Implement dependent and employee services
 - [ ] Implement dependents controller methods
