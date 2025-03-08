@@ -51,6 +51,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<Api.Middleware.ExceptionHandlingMiddleware>();
 app.UseCors(allowLocalhost);
 app.UseHttpsRedirection();
 app.UseAuthorization();
