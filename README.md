@@ -25,5 +25,6 @@ Tasks should be tracked in some issue tracking system. I will use this section f
 - [X] Implement the paycheck calculation method
 - [X] Implement employees controller methods
 - [X] Check the codebase test coverage and add missing tests
-- [ ] Check all requirements are met and covered by passing test cases
-- [ ] Provide instructions on how to run the application
+- [X] Check all requirements are met and covered by passing test cases
+- [ ] Review the codebase
+- [ ] List possible enhancements based on how the project evolves
