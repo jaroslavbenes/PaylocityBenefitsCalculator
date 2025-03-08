@@ -13,10 +13,36 @@ public static class DependencyInjection
             .AddScoped<IPayStubService, PayStubService>()
             .AddDeductionPolicies();
 
-    private static IServiceCollection AddDeductionPolicies(this IServiceCollection services) =>
+    private static IServiceCollection AddDeductionPolicies(this IServiceCollection services)
+    {
         services
             .AddScoped<IDeductionPolicy, BaseDeductionPolicy>()
+            .AddOptions<BaseDeductionPolicyOptions>()
+            .Configure<IConfiguration>((o, c) => { c.GetSection(BaseDeductionPolicyOptions.Key).Bind(o); })
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        services
             .AddScoped<IDeductionPolicy, DependentsDeductionPolicy>()
+            .AddOptions<DependentsDeductionPolicyOptions>()
+            .Configure<IConfiguration>((o, c) => { c.GetSection(DependentsDeductionPolicyOptions.Key).Bind(o); })
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        services
             .AddScoped<IDeductionPolicy, HighEarnerDeductionPolicy>()
-            .AddScoped<IDeductionPolicy, DependentsAgeSurchargeDeductionPolicy>();
+            .AddOptions<HighEarnerDeductionPolicyOptions>()
+            .Configure<IConfiguration>((o, c) => { c.GetSection(HighEarnerDeductionPolicyOptions.Key).Bind(o); })
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        services
+            .AddScoped<IDeductionPolicy, DependentsAgeSurchargeDeductionPolicy>()
+            .AddOptions<DependentsAgeSurchargeDeductionPolicyOptions>()
+            .Configure<IConfiguration>((o, c) => { c.GetSection(DependentsAgeSurchargeDeductionPolicyOptions.Key).Bind(o); })
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        return services;
+    }
 }

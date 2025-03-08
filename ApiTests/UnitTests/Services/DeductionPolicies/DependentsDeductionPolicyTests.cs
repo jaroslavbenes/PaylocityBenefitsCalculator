@@ -1,16 +1,29 @@
 using Api.Application.Models;
 using Api.Application.Services.DeductionPolicies;
+using Microsoft.Extensions.Options;
 using Xunit;
 
 namespace ApiTests.UnitTests.Services.DeductionPolicies;
 
 public class DependentsDeductionPolicyTests
 {
+    private static DependentsDeductionPolicy CreatePolicy(decimal dependentMonthlyCost)
+    {
+        var options =
+            Options.Create(
+                new DependentsDeductionPolicyOptions
+                {
+                    DependentMonthlyCost = dependentMonthlyCost
+                });
+
+        return new DependentsDeductionPolicy(options);
+    }
+
     [Fact]
     public void Name_ShouldBeNonEmptyString()
     {
         // Arrange
-        var policy = new DependentsDeductionPolicy();
+        var policy = CreatePolicy(600);
 
         // Act
         var result = policy.Name;
@@ -23,7 +36,7 @@ public class DependentsDeductionPolicyTests
     public void IsApplicable_ShouldReturnTrue_WhenEmployeeHasSomeDependents()
     {
         // Arrange
-        var policy = new DependentsDeductionPolicy();
+        var policy = CreatePolicy(600);
         var employee = new Employee { Dependents = [new Dependent()] };
 
         // Act
@@ -37,7 +50,7 @@ public class DependentsDeductionPolicyTests
     public void IsApplicable_ShouldReturnFalse_WhenEmployeeHasNoDependents()
     {
         // Arrange
-        var policy = new DependentsDeductionPolicy();
+        var policy = CreatePolicy(600);
         var employee = new Employee();
 
         // Act
@@ -51,7 +64,7 @@ public class DependentsDeductionPolicyTests
     public void Calculate_ShouldReturnExpectedAmount_WhenEmployeeHasSomeDependents()
     {
         // Arrange
-        var policy = new DependentsDeductionPolicy();
+        var policy = CreatePolicy(600);
         var employee = new Employee { Dependents = [new Dependent(), new Dependent()] };
         const decimal dependentMonthlyCost = 600;
         const int paychecksPerYear = 26;
@@ -68,7 +81,7 @@ public class DependentsDeductionPolicyTests
     public void Calculate_ShouldReturnZero_WhenEmployeeHasNoDependents()
     {
         // Arrange
-        var policy = new DependentsDeductionPolicy();
+        var policy = CreatePolicy(600);
         var employee = new Employee();
 
         // Act

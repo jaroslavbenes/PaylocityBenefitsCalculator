@@ -1,16 +1,29 @@
 using Api.Application.Models;
 using Api.Application.Services.DeductionPolicies;
+using Microsoft.Extensions.Options;
 using Xunit;
 
 namespace ApiTests.UnitTests.Services.DeductionPolicies;
 
 public class BaseDeductionPolicyTests
 {
+    private static BaseDeductionPolicy CreatePolicy(decimal baseMonthlyCost)
+    {
+        var options =
+            Options.Create(
+                new BaseDeductionPolicyOptions
+                {
+                    BaseMonthlyCost = baseMonthlyCost
+                });
+
+        return new BaseDeductionPolicy(options);
+    }
+
     [Fact]
     public void Name_ShouldBeNonEmptyString()
     {
         // Arrange
-        var policy = new BaseDeductionPolicy();
+        var policy = CreatePolicy(1_000);
 
         // Act
         var result = policy.Name;
@@ -23,7 +36,7 @@ public class BaseDeductionPolicyTests
     public void IsApplicable_ShouldReturnTrue()
     {
         // Arrange
-        var policy = new BaseDeductionPolicy();
+        var policy = CreatePolicy(1_000);
         var employee = new Employee();
 
         // Act
@@ -37,7 +50,7 @@ public class BaseDeductionPolicyTests
     public void Calculate_ShouldReturnExpectedAmount()
     {
         // Arrange
-        var policy = new BaseDeductionPolicy();
+        var policy = CreatePolicy(1_000);
         var employee = new Employee();
         const decimal baseMonthlyCost = 1_000;
         const int paychecksPerYear = 26;

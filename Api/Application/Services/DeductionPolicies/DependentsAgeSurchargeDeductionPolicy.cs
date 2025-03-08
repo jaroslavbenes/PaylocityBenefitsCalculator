@@ -1,15 +1,15 @@
 using Api.Application.Models;
 using Api.Application.Services.Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace Api.Application.Services.DeductionPolicies;
 
 /// <summary>
 /// Represents the deduction policy that applies a surcharge based on the age of dependents.
 /// </summary>
-public class DependentsAgeSurchargeDeductionPolicy : IDeductionPolicy
+public class DependentsAgeSurchargeDeductionPolicy(IOptions<DependentsAgeSurchargeDeductionPolicyOptions> options) : IDeductionPolicy
 {
-    private const int AgeThreshold = 50;
-    private const decimal MonthlySurchargePerDependent = 200;
+    private readonly DependentsAgeSurchargeDeductionPolicyOptions _options = options.Value;
 
     /// <summary>
     /// Gets the name of the deduction policy.
@@ -21,7 +21,8 @@ public class DependentsAgeSurchargeDeductionPolicy : IDeductionPolicy
     /// </summary>
     /// <param name="employee">The employee to check.</param>
     /// <returns><c>true</c> if any dependent is older than the age threshold; otherwise, <c>false</c>.</returns>
-    public bool IsApplicable(Employee employee) => employee.Dependents.Any(d => d.DateOfBirth.AddYears(AgeThreshold) <= DateTime.Today);
+    public bool IsApplicable(Employee employee) =>
+        employee.Dependents.Any(d => d.DateOfBirth.AddYears(_options.AgeThreshold) <= DateTime.Today);
 
     /// <summary>
     /// Calculates the deduction amount for the specified employee.
@@ -31,6 +32,6 @@ public class DependentsAgeSurchargeDeductionPolicy : IDeductionPolicy
     /// <returns>The calculated deduction amount.</returns>
     public decimal Calculate(Employee employee, int paychecksPerYear) =>
         IsApplicable(employee)
-            ? employee.Dependents.Count(d => d.DateOfBirth.AddYears(AgeThreshold) <= DateTime.Today) * MonthlySurchargePerDependent * 12 / paychecksPerYear
+            ? employee.Dependents.Count(d => d.DateOfBirth.AddYears(_options.AgeThreshold) <= DateTime.Today) * _options.MonthlySurchargePerDependent * 12 / paychecksPerYear
             : 0;
 }

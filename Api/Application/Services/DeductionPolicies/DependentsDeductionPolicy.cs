@@ -1,14 +1,15 @@
 using Api.Application.Models;
 using Api.Application.Services.Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace Api.Application.Services.DeductionPolicies;
 
 /// <summary>
 /// Represents the deduction policy for dependents' benefits costs.
 /// </summary>
-public class DependentsDeductionPolicy : IDeductionPolicy
+public class DependentsDeductionPolicy(IOptions<DependentsDeductionPolicyOptions> options) : IDeductionPolicy
 {
-    private const decimal DependentMonthlyCost = 600;
+    private readonly DependentsDeductionPolicyOptions _options = options.Value;
 
     /// <summary>
     /// Gets the name of the deduction policy.
@@ -30,6 +31,6 @@ public class DependentsDeductionPolicy : IDeductionPolicy
     /// <returns>The calculated deduction amount.</returns>
     public decimal Calculate(Employee employee, int paychecksPerYear) =>
         IsApplicable(employee)
-            ? employee.Dependents.Count * DependentMonthlyCost * 12 / paychecksPerYear
+            ? employee.Dependents.Count * _options.DependentMonthlyCost * 12 / paychecksPerYear
             : 0;
 }

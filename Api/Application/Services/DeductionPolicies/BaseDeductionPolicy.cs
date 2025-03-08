@@ -1,14 +1,15 @@
 using Api.Application.Models;
 using Api.Application.Services.Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace Api.Application.Services.DeductionPolicies;
 
 /// <summary>
 /// Represents the base costs for benefits deduction for employee benefits.
 /// </summary>
-public class BaseDeductionPolicy : IDeductionPolicy
+public class BaseDeductionPolicy(IOptions<BaseDeductionPolicyOptions> options) : IDeductionPolicy
 {
-    private const decimal BaseMonthlyCost = 1_000;
+    private readonly BaseDeductionPolicyOptions _options = options.Value;
 
     /// <summary>
     /// Gets the name of the deduction policy.
@@ -30,6 +31,6 @@ public class BaseDeductionPolicy : IDeductionPolicy
     /// <returns>The calculated deduction amount.</returns>
     public decimal Calculate(Employee employee, int paychecksPerYear) =>
         IsApplicable(employee)
-            ? BaseMonthlyCost * 12 / paychecksPerYear
+            ? _options.BaseMonthlyCost * 12 / paychecksPerYear
             : 0;
 }

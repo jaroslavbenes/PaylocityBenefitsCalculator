@@ -1,15 +1,15 @@
 using Api.Application.Models;
 using Api.Application.Services.Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace Api.Application.Services.DeductionPolicies;
 
 /// <summary>
 /// Represents the deduction policy that applies a surcharge for high earners.
 /// </summary>
-public class HighEarnerDeductionPolicy : IDeductionPolicy
+public class HighEarnerDeductionPolicy(IOptions<HighEarnerDeductionPolicyOptions> options) : IDeductionPolicy
 {
-    private const decimal SalaryThreshold = 80_000;
-    private const decimal SurchargeRate = 0.02m;
+    private readonly HighEarnerDeductionPolicyOptions _options = options.Value;
 
     /// <summary>
     /// Gets the name of the deduction policy.
@@ -21,7 +21,7 @@ public class HighEarnerDeductionPolicy : IDeductionPolicy
     /// </summary>
     /// <param name="employee">The employee to check.</param>
     /// <returns><c>true</c> if the employee's salary is above the salary threshold; otherwise, <c>false</c>.</returns>
-    public bool IsApplicable(Employee employee) => employee.Salary > SalaryThreshold;
+    public bool IsApplicable(Employee employee) => employee.Salary > _options.SalaryThreshold;
 
     /// <summary>
     /// Calculates the deduction amount for the specified employee.
@@ -31,6 +31,6 @@ public class HighEarnerDeductionPolicy : IDeductionPolicy
     /// <returns>The calculated deduction amount.</returns>
     public decimal Calculate(Employee employee, int paychecksPerYear) =>
         IsApplicable(employee)
-            ? employee.Salary * SurchargeRate / paychecksPerYear
+            ? employee.Salary * _options.SurchargeRate / paychecksPerYear
             : 0;
 }
