@@ -1,7 +1,8 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Api.Models;
+using Api.Application.Models;
+using Api.Dtos;
 using Newtonsoft.Json;
 using Xunit;
 

@@ -28,4 +28,7 @@ Tasks should be tracked in some issue tracking system. I will use this section f
 - [X] Check all requirements are met and covered by passing test cases
 - [X] Review the codebase
 - [X] Refactor integration tests to use WebApplicationFactory
+- [X] Restructure the project for future enhancements
+- [X] Make DTOs immutable
 - [ ] List possible enhancements based on how the project evolves
+

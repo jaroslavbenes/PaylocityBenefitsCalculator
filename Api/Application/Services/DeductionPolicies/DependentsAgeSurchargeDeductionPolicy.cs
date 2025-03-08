@@ -1,7 +1,7 @@
-using Api.Models;
-using Api.Services.Abstractions;
+using Api.Application.Models;
+using Api.Application.Services.Abstractions;
 
-namespace Api.Services.DeductionPolicies;
+namespace Api.Application.Services.DeductionPolicies;
 
 public class DependentsAgeSurchargeDeductionPolicy : IDeductionPolicy
 {

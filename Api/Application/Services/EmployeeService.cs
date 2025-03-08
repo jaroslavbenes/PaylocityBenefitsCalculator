@@ -1,9 +1,9 @@
-using Api.Models;
+using Api.Application.Models;
+using Api.Application.Services.Abstractions;
 using Api.Persistence;
-using Api.Services.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.Services;
+namespace Api.Application.Services;
 
 public class EmployeeService(ApplicationDbContext dbContext, IPayStubService payStubService) : IEmployeeService
 {

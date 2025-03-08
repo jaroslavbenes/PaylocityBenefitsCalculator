@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Api.Models;
-using Api.Services.DeductionPolicies;
+using Api.Application.Models;
+using Api.Application.Services.DeductionPolicies;
 using Xunit;
 
 namespace ApiTests.UnitTests.Services.DeductionPolicies;

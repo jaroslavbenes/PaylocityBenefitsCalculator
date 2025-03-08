@@ -1,4 +1,4 @@
-using Api.Models;
+using Api.Application.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Persistence;

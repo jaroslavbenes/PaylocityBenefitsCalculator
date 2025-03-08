@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Api.Models;
-using Api.Services;
-using Api.Services.Abstractions;
+using Api.Application.Models;
+using Api.Application.Services;
+using Api.Application.Services.Abstractions;
 using NSubstitute;
 using Xunit;
 

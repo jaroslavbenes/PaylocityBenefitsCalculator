@@ -1,6 +1,6 @@
-using Api.Models;
+using Api.Application.Models;
 
-namespace Api.Services.Abstractions;
+namespace Api.Application.Services.Abstractions;
 
 public interface IDeductionPolicy
 {

@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Api.Application.Models;
 using Api.Dtos.Dependent;
-using Api.Models;
 using Xunit;
 
 namespace ApiTests.IntegrationTests;
@@ -15,41 +15,14 @@ public class DependentIntegrationTests(TestWebApplicationFactory factory) : ICla
     {
         // Arrange
         var client = factory.CreateClient();
-        var dependents = new List<GetDependentDto>
-        {
-            new()
+        var dependents =
+            new List<DependentDto>
             {
-                Id = 1,
-                FirstName = "Spouse",
-                LastName = "Morant",
-                Relationship = Relationship.Spouse,
-                DateOfBirth = new DateTime(1998, 3, 3)
-            },
-            new()
-            {
-                Id = 2,
-                FirstName = "Child1",
-                LastName = "Morant",
-                Relationship = Relationship.Child,
-                DateOfBirth = new DateTime(2020, 6, 23)
-            },
-            new()
-            {
-                Id = 3,
-                FirstName = "Child2",
-                LastName = "Morant",
-                Relationship = Relationship.Child,
-                DateOfBirth = new DateTime(2021, 5, 18)
-            },
-            new()
-            {
-                Id = 4,
-                FirstName = "DP",
-                LastName = "Jordan",
-                Relationship = Relationship.DomesticPartner,
-                DateOfBirth = new DateTime(1974, 1, 2)
-            }
-        };
+                new(1, "Spouse", "Morant", Relationship.Spouse, new DateTime(1998, 3, 3)),
+                new(2, "Child1", "Morant", Relationship.Child, new DateTime(2020, 6, 23)),
+                new(3, "Child2", "Morant", Relationship.Child, new DateTime(2021, 5, 18)),
+                new(4, "DP", "Jordan", Relationship.DomesticPartner, new DateTime(1974, 1, 2))
+            };
 
         // Act
         var response = await client.GetAsync("/api/v1/dependents");
@@ -63,14 +36,7 @@ public class DependentIntegrationTests(TestWebApplicationFactory factory) : ICla
     {
         // Arrange
         var client = factory.CreateClient();
-        var dependent = new GetDependentDto
-        {
-            Id = 1,
-            FirstName = "Spouse",
-            LastName = "Morant",
-            Relationship = Relationship.Spouse,
-            DateOfBirth = new DateTime(1998, 3, 3)
-        };
+        var dependent = new DependentDto(1, "Spouse", "Morant", Relationship.Spouse, new DateTime(1998, 3, 3));
 
         // Act
         var response = await client.GetAsync("/api/v1/dependents/1");

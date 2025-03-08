@@ -1,11 +1,12 @@
-using Api.Services.Abstractions;
-using Api.Services.DeductionPolicies;
+using Api.Application.Services;
+using Api.Application.Services.Abstractions;
+using Api.Application.Services.DeductionPolicies;
 
-namespace Api.Services;
+namespace Api.Application;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddServices(this IServiceCollection services) =>
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services) =>
         services
             .AddScoped<IDependentService, DependentService>()
             .AddScoped<IEmployeeService, EmployeeService>()

@@ -1,6 +1,6 @@
 namespace Api.Dtos.PayStub;
 
-public record GetPayStubDto(
+public sealed record PayStubDto(
     int EmployeeId,
     decimal GrossPay,
     IEnumerable<DeductionDto> Deductions,
