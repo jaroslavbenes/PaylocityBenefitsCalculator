@@ -16,4 +16,14 @@ based on the following requirements:
 
 ## Tasks
 Tasks should be tracked in some issue tracking system. I will use this section for simplicity.
-- [ ] Check the provided code base and create tasks
+- [X] Check the provided code base and create tasks
+- [ ] Update TargetFramework to latest supported LTS
+- [ ] Use http for development
+- [ ] Add persistence
+- [ ] Implement dependent and employee services
+- [ ] Implement dependents controller methods
+- [ ] Implement the paycheck calculation method
+- [ ] Implement employees controller methods
+- [ ] Check the codebase test coverage and add missing tests
+- [ ] Check all requirements are met and covered by passing test cases
+- [ ] Provide instructions on how to run the application
